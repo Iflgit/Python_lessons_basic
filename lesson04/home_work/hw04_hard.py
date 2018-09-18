@@ -1,6 +1,8 @@
+__author__ = 'Nekhamchin Anatoly'
 # Задание-1:
 # Матрицы в питоне реализуются в виде вложенных списков:
 # Пример. Дано:
+print("1:")
 matrix = [[1, 0, 8],
           [3, 4, 1],
           [0, 4, 2]]
@@ -10,6 +12,16 @@ matrix = [[1, 0, 8],
 # matrix_rotate = [[1, 3, 0],
 #                  [0, 4, 4],
 #                  [8, 1, 2]]
+print("       matrix(list)  = ", matrix)
+#print("rotate_matrix(tuple) = ", tuple(zip(*matrix)))
+
+matrix_rotate = list(map(list, zip(*matrix)))
+
+print("rotate_matrix(list)  = ", list(map(list, zip(*matrix))))
+# # Пример транспонирования (поворота) матрицы
+# print("rotate_matrix = ", list(map(list, zip(*matrix))))
+# # Да, вот так все просто-сложно :-)
+
 
 # Суть сложности hard: Решите задачу в одну строку
 
@@ -17,6 +29,7 @@ matrix = [[1, 0, 8],
 # Найдите наибольшее произведение пяти последовательных цифр в 1000-значном числе.
 # Выведите произведение и индекс смещения первого числа последовательных 5-ти цифр.
 # Пример 1000-значного числа:
+print("2:")
 number = """
 73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -39,6 +52,24 @@ number = """
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450"""
 
+def mul(string):
+    _res = 1
+    for _item in string:
+        _res *= int(_item)
+    return _res
+
+
+number = number.replace("\n", "")
+_maximum = 0
+_pos = 0
+_index = 0
+while _index < len(number):
+    _current = mul(number[_index:_index + 5])
+    if _current > _maximum:
+        _maximum = _current
+        _pos = _index
+    _index += 1
+print("max mul of 5 elements {0} at {1} ({2})".format(_maximum, _pos, number[_pos:_pos+5]))
 
 # Задание-3 (Ферзи):
 # Известно, что на доске 8×8 можно расставить 8 ферзей так, чтобы они не били
@@ -47,3 +78,39 @@ number = """
 # Программа получает на вход восемь пар чисел,
 # каждое число от 1 до 8 — координаты 8 ферзей.
 # Если ферзи не бьют друг друга, выведите слово NO, иначе выведите YES.
+print("3:")
+
+
+def sum_1(row):
+    return sum(row) < 2
+
+
+ok = [[1, 7], [2, 4], [3, 2], [4, 8], [5, 6], [6, 1], [7, 3], [8, 5]]
+notok = [(1, 7), (2, 4), (3, 2), (4, 8), (5, 6), (6, 1), (7, 3), (8, 1)]
+
+field = [[0 for _ in range(8)] for _ in range(8)]
+try:
+    for _i in range(8):
+        ok[_i][0], ok[_i][1] = map(int, input("x,y {}:".format(_i)).split(','))
+except ValueError:
+    print("error value, use predefined:" + str(ok))
+    places = ok
+
+for _f in places:
+    field[_f[0]-1][_f[1]-1] = 1
+
+for row in field:
+    print(row)
+res = True
+for i in range(8):
+    res = res and sum_1(field[i]) and\
+          sum_1(tuple(zip(*field))[i]) and\
+          sum_1(field[x + i][x] for x in range(8 - i)) and\
+          sum_1(field[x][x + i] for x in range(8 - i)) and\
+          sum_1((field[x][7 - x - i] for x in range(8 - i))) and\
+          sum_1(field[7 - x][x + i] for x in range(8 - i))
+if res:
+    print("NO")
+else:
+    print("YES")
+

@@ -1,3 +1,4 @@
+__author__ = 'Nekhamchin Anatoly'
 # Все задачи текущего блока решите с помощью генераторов списков!
 
 # Задание-1:
@@ -6,9 +7,19 @@
 # квадратами элементов исходного списка
 # [1, 2, 4, 0] --> [1, 4, 16, 0]
 
+import random
+
+list1 = [random.randint(-100, 100) for _ in range(10)]
+list2 = list([x * x for x in list1])
+print("list {0}^2->{1}".format(list1, list2))
+
 # Задание-2:
 # Даны два списка фруктов.
 # Получить список фруктов, присутствующих в обоих исходных списках.
+
+fruit1 = ["fruit1", "frui2", "fruit5"]
+fruit2 = ["fruit1", "frui9", "fruit8", "fruit5"]
+print(list([fruit for fruit in fruit1 if fruit in fruit2]))
 
 # Задание-3:
 # Дан список, заполненный произвольными числами.
@@ -16,3 +27,9 @@
 # + Элемент кратен 3
 # + Элемент положительный
 # + Элемент не кратен 4
+
+
+list1 = [random.randint(-100, 100) for _ in range(100)]
+print(list1)
+list2 = [x for x in list1 if not x % 3 and x > 0 and x % 4]
+print(list2)
