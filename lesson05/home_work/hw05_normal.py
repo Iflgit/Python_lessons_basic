@@ -1,3 +1,4 @@
+__author__ = 'Nekhamchin Anatoly'
 # Задача-1:
 # Напишите небольшую консольную утилиту,
 # позволяющую работать с папками текущей директории.
@@ -13,3 +14,26 @@
 # Для решения данной задачи используйте алгоритмы из задания easy,
 # оформленные в виде соответствующих функций,
 # и импортированные в данный файл из easy.py
+import easy
+import os
+
+action = {
+    "cd": easy.cd,
+    "dir": easy.dir,
+    "md": easy.md,
+    "rd": easy.rd,
+    "exit": easy.quit
+}
+
+
+while True:
+    _key = input("choose {}: ".format('|'.join(action.keys())))
+    try:
+        if _key in ["cd", "md", "rd"]:
+            action[_key](os.getcwd(), input("dirname: "))
+        else:
+            action[_key](os.getcwd())
+    except KeyError:
+        print(f"{_key} - wrong action")
+
+
